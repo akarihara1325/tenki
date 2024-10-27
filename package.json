@@ -2,12 +2,9 @@
     "name": "tenki",
     "version": "1.0.0",
     "homepage": "http://akarihara1325.github.io/tenki",
-
     "scripts": {
         "start": "webpack serve --mode=development",
-        "build": "webpack --mode=production",
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
+        "build": "webpack --mode=production"
     },
     "dependencies": {
         "@types/react": "^17.0.83",

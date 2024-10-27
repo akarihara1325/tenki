@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { App } from './tenki'
+import { App } from './tenki';
 
 const Header = styled.header`
   font-size: 1.5rem;
@@ -45,23 +45,32 @@ const MapZone = styled.div`
   width: 80vw;
 `;
 
-
 interface TodofukenProps {
     prefecture: {
       jpName: string;
       lat: number;
       lon: number;
     };
+    addFavorite: (favorite: string) => void;
+    removeFavorite: (favorite: string) => void;
+    favorites: string[];
   }
   
-  export const Todofuken: React.FC<TodofukenProps> = ({ prefecture }) => {
+  export const Todofuken: React.FC<TodofukenProps> = ({ prefecture, addFavorite, removeFavorite, favorites }) => {
     return (
       <>
         <Header>Tenki</Header>
         <Wrapper>
-          <Okiniiri>お気に入り</Okiniiri>
+          <Okiniiri>
+            <h2>お気に入り</h2>
+            {favorites.map((favorite, index) => (
+              <div key={index}>
+                {favorite}
+              </div>
+            ))}
+          </Okiniiri>
           <MapZone>
-            <App location={prefecture} />
+            <App location={prefecture} addFavorite={addFavorite} removeFavorite={removeFavorite} favorites={favorites} />
           </MapZone>
         </Wrapper>
       </>
