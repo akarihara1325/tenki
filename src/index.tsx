@@ -1,20 +1,25 @@
-import * as React from 'react'
-import { render } from 'react-dom'
-import styled from 'styled-components'
-import { createGlobalStyle } from 'styled-components'
-import { Maps } from './pages/map'
+import * as React from 'react';
+import { render } from 'react-dom';
+import { createGlobalStyle } from 'styled-components';
+import { Maps } from './pages/map';
 
 const GlobalStyle = createGlobalStyle`
-body * {
-  box-sizing: border-box;
-}
-`
+  body * {
+    box-sizing: border-box;
+  }
+`;
 
-const Main = (
-<>
-  <GlobalStyle />
-  <Maps />
-</>
-)
+const App: React.FC = () => {
+  return (
+    <>
+      <GlobalStyle />
+      <Maps onSelectPrefecture={handlePrefectureSelect} />
+    </>
+  );
+};
 
-render(Main, document.getElementById('app'))
+const handlePrefectureSelect = (enName: string) => {
+  window.location.href = `/todofuken/${enName}`;
+};
+
+render(<App />, document.getElementById('app'));
