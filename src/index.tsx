@@ -24,11 +24,12 @@ const App: React.FC = () => {
 
   const handlePrefectureSelect = (name: string) => {
     setSelectedPrefecture(name);
-    const selectedLocation = locationList.find(location => location.jpName === name);
+    const selectedLocation = locationList.find((location) => location.jpName === name);
     if (selectedLocation) {
-      setLocation(selectedLocation);
+      setLocation({ ...selectedLocation, enName: selectedLocation.enName });
     }
   };
+  
 
   const addFavorite = (favorite: string) => {
     const updatedFavorites = [...favorites, favorite];
@@ -48,7 +49,7 @@ const App: React.FC = () => {
       {!selectedPrefecture && <Maps onSelectPrefecture={handlePrefectureSelect} favorites={favorites} />}
       {selectedPrefecture && (
         <Todofuken
-          prefecture={location}
+          prefecture={{ ...location, enName: location.enName }}
           addFavorite={addFavorite}
           removeFavorite={removeFavorite}
           favorites={favorites}

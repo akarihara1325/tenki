@@ -46,15 +46,12 @@ const MapZone = styled.div`
 `;
 
 interface TodofukenProps {
-    prefecture: {
-      jpName: string;
-      lat: number;
-      lon: number;
-    };
-    addFavorite: (favorite: string) => void;
-    removeFavorite: (favorite: string) => void;
-    favorites: string[];
-  }
+  prefecture: { jpName: string; enName: string; lat: number; lon: number };
+  addFavorite: (favorite: string) => void;
+  removeFavorite: (favorite: string) => void;
+  favorites: string[];
+}
+
   
   export const Todofuken: React.FC<TodofukenProps> = ({ prefecture, addFavorite, removeFavorite, favorites }) => {
     return (
