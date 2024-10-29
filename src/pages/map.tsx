@@ -88,6 +88,7 @@ export const Maps: React.FC<MapsProps> = ({ onSelectPrefecture, favorites }) => 
           {favorites.map((favorite, index) => (
             <div key={index}>{favorite}</div>
           ))}
+          <a onClick={() => handleClick('ichiran')}>一覧</a>
         </Okiniiri>
         <MapZone>
           {prefectures.map((prefecture) => (

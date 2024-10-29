@@ -4,6 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 import { Maps } from './pages/map';
 import { Todofuken } from './pages/todofuken';
 import { locationList } from './pages/tenki';
+import { Ichiran } from './pages/ichiran';
 import { useState, useEffect } from 'react';
 
 const GlobalStyle = createGlobalStyle`
@@ -16,6 +17,7 @@ const App: React.FC = () => {
   const [selectedPrefecture, setSelectedPrefecture] = useState<string | null>(null);
   const [location, setLocation] = useState(locationList[0]);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [showIchiran, setShowIchiran] = useState<boolean>(false);
 
   useEffect(() => {
     const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -23,13 +25,18 @@ const App: React.FC = () => {
   }, []);
 
   const handlePrefectureSelect = (name: string) => {
-    setSelectedPrefecture(name);
-    const selectedLocation = locationList.find((location) => location.jpName === name);
-    if (selectedLocation) {
-      setLocation({ ...selectedLocation, enName: selectedLocation.enName });
+    if (name === 'ichiran') {
+      setShowIchiran(true);
+      setSelectedPrefecture(null);
+    } else {
+      setSelectedPrefecture(name);
+      setShowIchiran(false);
+      const selectedLocation = locationList.find((location) => location.jpName === name);
+      if (selectedLocation) {
+        setLocation({ ...selectedLocation, enName: selectedLocation.enName });
+      }
     }
   };
-  
 
   const addFavorite = (favorite: string) => {
     const updatedFavorites = [...favorites, favorite];
@@ -46,13 +53,22 @@ const App: React.FC = () => {
   return (
     <>
       <GlobalStyle />
-      {!selectedPrefecture && <Maps onSelectPrefecture={handlePrefectureSelect} favorites={favorites} />}
-      {selectedPrefecture && (
+      {!selectedPrefecture && !showIchiran && <Maps onSelectPrefecture={handlePrefectureSelect} favorites={favorites} />}
+      {selectedPrefecture && !showIchiran && (
         <Todofuken
           prefecture={{ ...location, enName: location.enName }}
           addFavorite={addFavorite}
           removeFavorite={removeFavorite}
           favorites={favorites}
+          handleClick={handlePrefectureSelect}
+        />
+      )}
+      {showIchiran && (
+        <Ichiran
+          favorites={favorites.map(fav => {
+            const [jpName, enName] = fav.split(' ');
+            return { enName, jpName, lat: 35.754, lon: 139.853 }; // 仮の緯度経度を使用
+          })}
         />
       )}
     </>

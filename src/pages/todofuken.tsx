@@ -50,27 +50,27 @@ interface TodofukenProps {
   addFavorite: (favorite: string) => void;
   removeFavorite: (favorite: string) => void;
   favorites: string[];
+  handleClick: (name: string) => void; // 新しいプロップ
 }
 
-  
-  export const Todofuken: React.FC<TodofukenProps> = ({ prefecture, addFavorite, removeFavorite, favorites }) => {
-    return (
-      <>
-        <Header>Tenki</Header>
-        <Wrapper>
-          <Okiniiri>
-            <h2>お気に入り</h2>
-            {favorites.map((favorite, index) => (
-              <div key={index}>
-                {favorite}
-              </div>
-            ))}
-          </Okiniiri>
-          <MapZone>
-            <App location={prefecture} addFavorite={addFavorite} removeFavorite={removeFavorite} favorites={favorites} />
-          </MapZone>
-        </Wrapper>
-      </>
-    );
-  };
-  
+export const Todofuken: React.FC<TodofukenProps> = ({ prefecture, addFavorite, removeFavorite, favorites, handleClick }) => {
+  return (
+    <>
+      <Header>Tenki</Header>
+      <Wrapper>
+        <Okiniiri>
+          <h2>お気に入り</h2>
+          {favorites.map((favorite, index) => (
+            <div key={index}>
+              {favorite}
+            </div>
+          ))}
+          <a onClick={() => handleClick('ichiran')}>一覧</a> 
+        </Okiniiri>
+        <MapZone>
+          <App location={prefecture} addFavorite={addFavorite} removeFavorite={removeFavorite} favorites={favorites} />
+        </MapZone>
+      </Wrapper>
+    </>
+  );
+};
